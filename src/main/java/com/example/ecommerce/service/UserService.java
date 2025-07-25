@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 public class UserService {
 
@@ -39,7 +40,11 @@ public class UserService {
     }
 
     public UserEntity getbyid(Long id){
-        return userRepository.findById(id).get();
+        if (userRepository.existsById(id)) {
+            return userRepository.findById(id).get();
+        }else{
+            throw new RuntimeException("User not found");
+            }
     }
 
     public List<UserEntity> getall(){
@@ -47,9 +52,12 @@ public class UserService {
     }
 
     public  String deletebyid(Long id){
-        userRepository.deleteById(id);
-        return "Deleted ";
-
+       if(userRepository.existsById(id)){
+           userRepository.deleteById(id);
+           return "user deleted successfully";
+       }else {
+           throw new RuntimeException("User found");
+       }
     }
 
     public String deleteall(){
