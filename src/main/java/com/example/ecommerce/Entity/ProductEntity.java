@@ -21,4 +21,5 @@ public class ProductEntity {
     private String stock;
 
 
+
 }

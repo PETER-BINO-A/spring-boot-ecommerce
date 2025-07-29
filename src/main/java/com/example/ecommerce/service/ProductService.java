@@ -6,6 +6,8 @@ import com.example.ecommerce.request.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -30,5 +32,22 @@ public class ProductService {
         ExistingProduct.setPrice(productRequest.getPrice());
         ExistingProduct.setStock(productRequest.getStock());
         return productRepository.save(ExistingProduct);
+    }
+    public List<ProductEntity> searchProduct(String name){
+        List<ProductEntity> search =productRepository.findByNameContaining(name);
+        return search;
+    }
+    public List<ProductEntity> getProduct(){
+         List<ProductEntity> products=productRepository.findAll();
+         return products;
+    }
+    public  void deletebyid(Long id){
+         ProductEntity product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("id not found "));
+         productRepository.deleteById(id);
+
+    }
+
+    public void deleteall(){
+         productRepository.deleteAll();
     }
 }
